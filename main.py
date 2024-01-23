@@ -10,15 +10,16 @@ class CSVToXML():
             cont = f.readlines()
             self.headers = cont[0].strip().split(',')
             self.data = [line.strip().split(',') for line in cont[1:]]
+        print(cont)
         return cont
 
     def transform(self):
         self.import_file()
-        cont = '<DATA>\n'  
+        cont = '<DATA>\n'
         for row in self.data:
             cont += ' <ROW>\n'
             for i in range(len(self.headers)):
-                cont += f'    <{self.headers[i]}>{row[i]}</{self.headers[i]}>\n'  
+                cont += f'    <{self.headers[i]}>{row[i]}</{self.headers[i]}>\n'
             cont += ' </ROW>\n'
         cont += '</DATA>\n'
         return cont
@@ -28,9 +29,11 @@ class CSVToXML():
         with open(self.out_file, 'w') as f:
             f.write(data)
 
+
 def main():
     xml = CSVToXML('in.csv', 'out.xml')
     xml.export()
+
 
 if __name__ == '__main__':
     main()
